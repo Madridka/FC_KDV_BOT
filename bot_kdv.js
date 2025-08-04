@@ -7,44 +7,45 @@ const TOKEN = process.env.BOT_TOKEN;
 const bot = new TelegramBot(TOKEN, { polling: true });
 
 const messageStore = {
-  replyText: "Привет, это информационный бот ФК КДВ!",
+  replyText:
+    "Привет, это информационный бот ФК КДВ! Скоро здесь будет больше информации!\nА пока подпишись на наш паблик - @boroda_tomsk_youtube",
 };
 
 const matches = {
-  matches1: "Четверг, 7 августа, Анри - КДВ // Кубок России",
-  matches2: "Воскресенье, 10 августа, Амкар - КДВ // 16-й тур лиги",
-  matches3: "Воскресенье, 17 августа, КДВ - Динамо-Б // 17-й тур",
+  matches1:
+    "✈️ | 7 августа (чт) 16:30 тск // Анри (Владивосток) - ФК КДВ // Кубок России",
+  matches2: "✈️ | 10 августа (вск) // Амкар (Пермь) - ФК КДВ // 16-й тур",
+  matches3: "🏠 | 17 августа (вск) // ФК КДВ - Динамо (Барнаул) // 17-й тур",
+  matches4:
+    "✈️ | 24 августа (вск) // Челябинск-2 (Челябинск) - ФК КДВ // 18-й тур",
+  matches5:
+    "🏠 | 31 августа (вск) // ФК КДВ - Оренбург-2 (Оренбург) // 19-й тур",
 };
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
 
-  const options = {
+  bot.sendMessage(chatId, "Добро пожаловать! Нажмите на кнопку из меню", {
     reply_markup: {
-      inline_keyboard: [
-        [{ text: "Инфо", callback_data: "send_stored_message" }],
-        [{ text: "Список матчей", callback_data: "send_matches" }],
-      ],
+      keyboard: [["Инфо"], ["Список матчей"]],
+      resize_keyboard: true,
+      one_time_keyboard: false,
     },
-  };
-
-  bot.sendMessage(chatId, "Добро пожаловать! Нажми на кнопку ниже:", options);
+  });
 });
 
-bot.on("callback_query", (query) => {
-  const chatId = query.message.chat.id;
-  const data = query.data;
+bot.on("message", (msg) => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
 
-  if (data === "send_stored_message") {
+  if (text === "Инфо") {
     bot.sendMessage(chatId, messageStore.replyText);
   }
 
-  if (data === "send_matches") {
+  if (text === "Список матчей") {
     bot.sendMessage(
       chatId,
-      `1. ${matches.matches1} \n2. ${matches.matches2} \n3. ${matches.matches3}`
+      `1. ${matches.matches1} \n2. ${matches.matches2} \n3. ${matches.matches3} \n4. ${matches.matches4} \n5. ${matches.matches5}`
     );
   }
-
-  bot.answerCallbackQuery(query.id);
 });
