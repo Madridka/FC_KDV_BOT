@@ -1,3 +1,3 @@
-npm install
+Установить зависимости: npm install
 
-node bot_kvd.js
+Запустить бота: node bot_kvd.js
