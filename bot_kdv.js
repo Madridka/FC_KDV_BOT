@@ -61,10 +61,10 @@ bot.on("message", (msg) => {
   }
 
   if (text === "Актуальная таблица") {
-    const imagePath = path.join(__dirname, "static", "table.png");
+    const imagePath = path.join(__dirname, "static", "table2.png");
     bot.sendPhoto(chatId, imagePath, {
       caption:
-        "🍬 Актуальная таблица Leon Лига Б, группа 4 \n@boroda_tomsk_youtube",
+        "🏆 Актуальная таблица Leon Лига Б, группа 4 \n@boroda_tomsk_youtube",
     });
   }
 
