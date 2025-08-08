@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const nextMatch =
-  "✈️ // 7 августа (чт) 16:30 тск \nАнри (Владивосток) - ФК КДВ \nКубок России \n@boroda_tomsk_youtube";
+  "✈️ // 10 августа (вск) 16:30 тск \nАмкар (Пермь) - ФК КДВ \n16-ый тур Leon 2 Лига Б \n@boroda_tomsk_youtube";
 const textButtonNextMatch = "Ссылка на трансляцию";
 const urlNextMatch =
   "https://news.sportbox.ru/Vidy_sporta/Futbol/Russian_Cup/spbvideo_NI2227713_translation_Anri___KDV_FONBET_Kubok_Rossii_po_futbolu_sezona_2025_2026_gg";
@@ -33,7 +33,7 @@ function sendWelcome(chatId) {
       keyboard: [
         ["Перезапустить бота"],
         ["Инфо", "Список матчей"],
-        ["Актуальная таблица", "Ближайший матч (+ссылка)"],
+        ["Актуальная таблица", "Ближайший матч"],
       ],
       resize_keyboard: true,
       one_time_keyboard: false,
@@ -68,18 +68,22 @@ bot.on("message", (msg) => {
     });
   }
 
-  if (text === "Ближайший матч (+ссылка)") {
-    bot.sendMessage(chatId, nextMatch, {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: textButtonNextMatch,
-              url: urlNextMatch,
-            },
-          ],
-        ],
-      },
-    });
+  if (text === "Ближайший матч") {
+    bot.sendMessage(
+      chatId,
+      nextMatch
+      //   , {
+      //   reply_markup: {
+      //     inline_keyboard: [
+      //       [
+      //         {
+      //           text: textButtonNextMatch,
+      //           url: urlNextMatch,
+      //         },
+      //       ],
+      //     ],
+      //   },
+      // }
+    );
   }
 });
