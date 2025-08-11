@@ -17,10 +17,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const nextMatch =
-  "✈️ // 10 августа (вск) 16:30 тск \nАмкар (Пермь) - ФК КДВ \n16-ый тур Leon 2 Лига Б \n@boroda_tomsk_youtube";
-const textButtonNextMatch = "Ссылка на трансляцию";
-const urlNextMatch =
-  "https://news.sportbox.ru/Vidy_sporta/Futbol/Russian_Cup/spbvideo_NI2227713_translation_Anri___KDV_FONBET_Kubok_Rossii_po_futbolu_sezona_2025_2026_gg";
+  "✈️ // 17 августа (вск)  \nФК КДВ - Динамо-Барнаул\n17-ый тур Leon 2 Лига Б \n@boroda_tomsk_youtube";
+const textButtonNextMatch = "Ссылка на матч";
+const urlNextMatch = "https://fnl.pro/leon-b/matches/48803";
+
+const prevMatch =
+  "✈️ // ПОБЕЕЕЕДАААА!!!!! 10 августа\nАмкар (Пермь) 2 - 3 ФК КДВ \n16-ый тур Leon 2 Лига Б \n@boroda_tomsk_youtube";
+const textButtonPrevMatch = "Статистика матча";
+const urlPrevMatch = "https://fnl.pro/leon-b/matches/48775";
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
@@ -31,9 +35,9 @@ function sendWelcome(chatId) {
   bot.sendMessage(chatId, "Добро пожаловать! Нажмите на кнопку из меню.", {
     reply_markup: {
       keyboard: [
-        ["Перезапустить бота"],
-        ["Инфо", "Список матчей"],
-        ["Актуальная таблица", "Ближайший матч"],
+        ["Перезапустить бота", "Инфо"],
+        ["Актуальная таблица", "Список матчей"],
+        ["Предыдущий матч", "Ближайший матч"],
       ],
       resize_keyboard: true,
       one_time_keyboard: false,
@@ -61,7 +65,7 @@ bot.on("message", (msg) => {
   }
 
   if (text === "Актуальная таблица") {
-    const imagePath = path.join(__dirname, "static", "table2.png");
+    const imagePath = path.join(__dirname, "static", "table.png");
     bot.sendPhoto(chatId, imagePath, {
       caption:
         "🏆 Актуальная таблица Leon Лига Б, группа 4 \n@boroda_tomsk_youtube",
@@ -69,21 +73,32 @@ bot.on("message", (msg) => {
   }
 
   if (text === "Ближайший матч") {
-    bot.sendMessage(
-      chatId,
-      nextMatch
-      //   , {
-      //   reply_markup: {
-      //     inline_keyboard: [
-      //       [
-      //         {
-      //           text: textButtonNextMatch,
-      //           url: urlNextMatch,
-      //         },
-      //       ],
-      //     ],
-      //   },
-      // }
-    );
+    bot.sendMessage(chatId, nextMatch, {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: textButtonNextMatch,
+              url: urlNextMatch,
+            },
+          ],
+        ],
+      },
+    });
+  }
+
+  if (text === "Предыдущий матч") {
+    bot.sendMessage(chatId, prevMatch, {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: textButtonPrevMatch,
+              url: urlPrevMatch,
+            },
+          ],
+        ],
+      },
+    });
   }
 });
