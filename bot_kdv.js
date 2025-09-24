@@ -33,12 +33,21 @@ bot.onText(/\/start/, (msg) => {
   sendWelcome(chatId);
 });
 
+const safeSendMessage = (chatId, text, options) => {
+  bot.sendMessage(chatId, text, options).catch((err) => {
+    console.log(
+      `Не смог отправить сообщение пользователю ${chatId}:`,
+      err.response?.description || err.message
+    );
+  });
+};
+
 function sendWelcome(chatId) {
-  bot.sendMessage(chatId, "Добро пожаловать! Нажмите на кнопку из меню.", {
+  bot.safeSendMessage(chatId, "Добро пожаловать! Нажмите на кнопку из меню.", {
     reply_markup: {
       keyboard: [
         ["Перезапустить бота", "Инфо"],
-        ["Актуальная таблица"],
+        // ["Актуальная таблица"],
         ["Предыдущий матч", "Ближайший матч"],
       ],
       resize_keyboard: true,
@@ -71,7 +80,7 @@ bot.on("message", (msg) => {
   }
 
   if (text === "Инфо") {
-    bot.sendMessage(chatId, messageStore.replyText);
+    bot.safeSendMessage(chatId, messageStore.replyText);
   }
 
   // if (text === "Список матчей") {
@@ -81,16 +90,17 @@ bot.on("message", (msg) => {
   //   });
   // }
 
-  if (text === "Актуальная таблица") {
-    const imagePath = path.join(__dirname, "static", "table.png");
-    bot.sendPhoto(chatId, imagePath, {
-      caption:
-        "🏆 Актуальная таблица Leon Лига Б, группа 4 \n@boroda_tomsk_youtube",
-    });
-  }
+  // if (text === "Актуальная таблица") {
+  //   const imagePath = path.join(__dirname, "static", "table.png");
+  //   bot.sendPhoto(chatId, imagePath, {
+  //     caption:
+  //       "🏆 Актуальная таблица Leon Лига Б, группа 4 \n@boroda_tomsk_youtube",
+  //     contentType: "image/png",
+  //   });
+  // }
 
   if (text === "Ближайший матч") {
-    bot.sendMessage(chatId, nextMatch, {
+    bot.safeSendMessage(chatId, nextMatch, {
       reply_markup: {
         inline_keyboard: [
           [
@@ -105,7 +115,7 @@ bot.on("message", (msg) => {
   }
 
   if (text === "Предыдущий матч") {
-    bot.sendMessage(chatId, prevMatch, {
+    bot.safeSendMessage(chatId, prevMatch, {
       reply_markup: {
         inline_keyboard: [
           [
