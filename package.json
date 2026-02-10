@@ -1,6 +1,6 @@
 {
   "name": "tg-bot-kdv",
-  "version": "0.0.1b",
+  "version": "1.0.0",
   "type": "module",
   "dependencies": {
     "dotenv": "^17.2.1",

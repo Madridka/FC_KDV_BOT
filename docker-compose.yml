@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  telegram-bot:
+    build: .
+    container_name: kdv-telegram-bot
+    restart: unless-stopped
+    network_mode: "host"
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+    volumes:
+      - ./static:/app/static:ro
